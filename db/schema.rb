@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141228230810) do
+ActiveRecord::Schema.define(version: 20141229023028) do
 
   create_table "authorizations", force: :cascade do |t|
     t.string   "provider"
@@ -23,6 +23,16 @@ ActiveRecord::Schema.define(version: 20141228230810) do
     t.string   "url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "shares", force: :cascade do |t|
+    t.integer  "from_user_id"
+    t.integer  "to_user_id"
+    t.string   "to_email"
+    t.datetime "create_at"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "url"
   end
 
   create_table "users", force: :cascade do |t|
