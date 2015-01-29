@@ -1,4 +1,4 @@
-<h2>Dashboard page</h2>
+<h2>Welcome back {{ user.name }}</h2>
   <div>
     <ul>
       <li ng-repeat="articles in articles | orderBy:publishedDate:false">
@@ -6,8 +6,8 @@
         <div class="large-11 small-11 columns">
           <h2>
             <a
-              href="{{article.link}}"
-              title="{{article.title}}">
+              href="{{ article.link }}"
+              title="{{ article.title }}">
               {{ article.title }}
             </a>
           </h2>
@@ -18,4 +18,4 @@
       </div>
       </li>
     </ul>
-  </div>    
+  </div>

@@ -1,25 +1,30 @@
-angular.module('myApp.services', [])
-.factory('ArticleService', function($http, $q) {
-  var service = {
-    getLatestFeed: function() {
-      var d = $q.defer();
-      $http.jsonp('http://ajax.googleapis.com/ajax/services/feed?v=1.0&num=50&callback=JSON_CALLBACK&q='
-        encodeURIComponent(
-          'http://feeds.huffingtonpost.com/huffingtonpost/raw_feed'
-          )
-        ).then(function(data, status) {
-          // Huffpost data comes back as
-          // data.data.responseData.feed.entries
-          if (data.status === 200)
-            d.resolve(data.data.responseData.feed.entries);
-          else
-            d.reject(data);
-          });
+var services = [];
 
-        return d.promise;
+  angular.module('myApp.services', ['ngResource'])
+  .factory('ArticleService', function($resource) {
+    return $resource('http://ajax.googleapis.com/ajax/services/feed/load', {}, {
+      fetch: { method: 'JSONP', params: {v: '1.0', callback: 'JSON_CALLBACK'} }
+    });
+  });
+  .service('FeedList', function ($rootScope, FeedLoader) {
+    this.get = function() {
+      var feedSources = [
+    {title: 'Huffington Post', url: 'http://feeds.huffingtonpost.com/huffingtonpost/raw_feed'},
+    ];
+    if (feeds.length === 0) {
+      for (var i=0; i<feedSources.length; i++) {
+        FeedLoader.fetch({q: feedSources[i].url, num: 10}, {}, function (data) {
+          var feed = data.responseData.feed;
+          feeds.push(feed);
+        });
+      }
     }
-
+    return feeds;
   };
-
-  return service;
-});
+  })
+  .controller('FeedCtrl', function ($scope, FeedList) {
+    $scope.feeds = FeedList.get();
+    $scope.$on('FeedList', function (event, data) {
+      $scope.feeds = data;
+    });
+  });

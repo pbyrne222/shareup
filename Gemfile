@@ -10,11 +10,10 @@ gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
-gem 'turbolinks'
 gem 'coffee-rails', '~> 4.1.0'
-gem 'angularjs-rails', '>= 1.2.0.rc1'
+gem 'angularjs-rails'
 gem 'ngmin-rails'
-gem 'zurb-foundation'
+gem 'foundation-rails', '~> 5.4.5'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
